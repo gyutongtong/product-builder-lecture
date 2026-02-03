@@ -1,5 +1,6 @@
 const lottoNumbersContainer = document.getElementById('lotto-numbers');
 const generateBtn = document.getElementById('generate-btn');
+const themeSwitch = document.getElementById('checkbox');
 
 const getNumberColor = (number) => {
     if (number <= 10) return '#fbc400';
@@ -41,6 +42,25 @@ const generateLottoNumbers = () => {
 // '번호 생성' 버튼 클릭 이벤트 리스너
 generateBtn.addEventListener('click', generateLottoNumbers);
 
+// --- 테마 전환 ---
+const applyTheme = (isDarkMode) => {
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+        themeSwitch.checked = true;
+    } else {
+        document.body.classList.remove('dark-mode');
+        themeSwitch.checked = false;
+    }
+};
+
+const toggleTheme = () => {
+    const isDarkMode = themeSwitch.checked;
+    localStorage.setItem('darkMode', isDarkMode);
+    applyTheme(isDarkMode);
+};
+
+themeSwitch.addEventListener('change', toggleTheme);
+
 // --- 페이지 최초 로드 시 실행되는 로직 ---
 document.addEventListener('DOMContentLoaded', () => {
     // localStorage에서 저장된 번호를 불러옴
@@ -54,4 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // 저장된 번호가 없으면, 새로운 번호를 생성
         generateLottoNumbers();
     }
+
+    // localStorage에서 저장된 테마를 불러옴
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    applyTheme(savedDarkMode);
 });
