@@ -12,6 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Your personalized travel recommendation for exploring the vibrant city of Seoul.",
             initialRecommendationText: "Click the button below to get your recommendation!",
             recommendationButton: "Get My Seoul Recommendation",
+            contactTitle: "Contact Us",
+            contactDescription: "If you have any partnership inquiries or other questions, please fill out the form below.",
+            formNameLabel: "Name:",
+            formEmailLabel: "Email:",
+            formCompanyLabel: "Company (Optional):",
+            formMessageLabel: "Message:",
+            formSubmitButton: "Submit Inquiry",
             recommendations: [
                 "Explore the historical Gyeongbokgung Palace and Bukchon Hanok Village, then enjoy traditional tea.",
                 "Visit Namsan Tower for panoramic city views, followed by shopping and street food in Myeongdong.",
@@ -31,6 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "서울의 활기찬 매력을 탐험할 당신만을 위한 여행지를 추천해 드립니다.",
             initialRecommendationText: "아래 버튼을 눌러 추천 여행지를 받아보세요!",
             recommendationButton: "서울 여행지 추천받기",
+            contactTitle: "문의하기",
+            contactDescription: "제휴 문의나 다른 질문이 있으시면 아래 양식을 작성해주세요.",
+            formNameLabel: "이름:",
+            formEmailLabel: "이메일:",
+            formCompanyLabel: "회사명 (선택 사항):",
+            formMessageLabel: "문의 내용:",
+            formSubmitButton: "문의 제출",
             recommendations: [
                 "역사적인 경복궁과 북촌 한옥 마을을 탐방하고 전통차를 즐겨보세요.",
                 "남산타워에서 서울 전경을 감상한 후 명동에서 쇼핑과 길거리 음식을 즐겨보세요.",
@@ -56,7 +70,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (translations[currentLang][key]) {
                 if (element.tagName === 'TITLE') {
                     document.title = translations[currentLang][key];
-                } else {
+                } else if (element.tagName === 'INPUT' && (element.type === 'text' || element.type === 'email')) {
+                    // Placeholder for input fields
+                    element.placeholder = translations[currentLang][key];
+                } else if (element.tagName === 'LABEL') {
+                    element.textContent = translations[currentLang][key];
+                } else if (element.tagName === 'BUTTON' && element.type === 'submit') {
+                    element.textContent = translations[currentLang][key];
+                }
+                else {
                     element.textContent = translations[currentLang][key];
                 }
             }
