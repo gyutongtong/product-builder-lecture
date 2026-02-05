@@ -1,81 +1,28 @@
-const lottoNumbersContainer = document.getElementById('lotto-numbers');
-const generateBtn = document.getElementById('generate-btn');
-const themeSwitch = document.getElementById('checkbox');
-
-const getNumberColor = (number) => {
-    if (number <= 10) return '#fbc400';
-    if (number <= 20) return '#69c8f2';
-    if (number <= 30) return '#ff7272';
-    if (number <= 40) return '#aaa';
-    return '#b0d840';
-};
-
-// 인자로 받은 숫자 배열을 화면에 표시하는 함수
-const displayNumbers = (numbers) => {
-    lottoNumbersContainer.innerHTML = ''; // 기존 숫자들을 초기화
-    numbers.forEach((number, index) => {
-        const numberElement = document.createElement('div');
-        numberElement.classList.add('lotto-number');
-        numberElement.style.backgroundColor = getNumberColor(number);
-        numberElement.style.animationDelay = `${index * 0.1}s`;
-        numberElement.textContent = number;
-        lottoNumbersContainer.appendChild(numberElement);
-    });
-};
-
-// 새로운 로또 번호를 생성하는 함수
-const generateLottoNumbers = () => {
-    const numbers = new Set();
-    while (numbers.size < 6) {
-        numbers.add(Math.floor(Math.random() * 45) + 1);
-    }
-
-    const sortedNumbers = Array.from(numbers).sort((a, b) => a - b);
-
-    // 생성된 번호를 localStorage에 문자열 형태로 저장
-    localStorage.setItem('lottoNumbers', JSON.stringify(sortedNumbers));
-    
-    // 화면에 번호 표시
-    displayNumbers(sortedNumbers);
-};
-
-// '번호 생성' 버튼 클릭 이벤트 리스너
-generateBtn.addEventListener('click', generateLottoNumbers);
-
-// --- 테마 전환 ---
-const applyTheme = (isDarkMode) => {
-    if (isDarkMode) {
-        document.body.classList.add('dark-mode');
-        themeSwitch.checked = true;
-    } else {
-        document.body.classList.remove('dark-mode');
-        themeSwitch.checked = false;
-    }
-};
-
-const toggleTheme = () => {
-    const isDarkMode = themeSwitch.checked;
-    localStorage.setItem('darkMode', isDarkMode);
-    applyTheme(isDarkMode);
-};
-
-themeSwitch.addEventListener('change', toggleTheme);
-
-// --- 페이지 최초 로드 시 실행되는 로직 ---
 document.addEventListener('DOMContentLoaded', () => {
-    // localStorage에서 저장된 번호를 불러옴
-    const savedNumbersJSON = localStorage.getItem('lottoNumbers');
+    const recommendButton = document.getElementById('recommend-button');
+    const dateCourseDisplay = document.getElementById('date-course-display');
 
-    if (savedNumbersJSON) {
-        // 저장된 번호가 있으면, JSON 문자열을 배열로 변환하여 화면에 표시
-        const savedNumbers = JSON.parse(savedNumbersJSON);
-        displayNumbers(savedNumbers);
-    } else {
-        // 저장된 번호가 없으면, 새로운 번호를 생성
-        generateLottoNumbers();
+    const seoulDateCourses = [
+        "남산타워에서 서울 전경 감상 후 명동에서 쇼핑 및 길거리 음식 투어",
+        "경복궁 한복 체험 후 서촌 한옥마을에서 전통차와 산책",
+        "한강 유람선 탑승 후 여의도 공원에서 피크닉",
+        "롯데월드에서 신나는 하루를 보내고 석촌호수 산책",
+        "홍대 거리에서 예술과 젊음 만끽 후 분위기 좋은 루프탑 바 방문",
+        "가로수길에서 브런치와 쇼핑, 그리고 아늑한 카페에서 대화",
+        "북촌 한옥마을 골목길 탐방 후 삼청동에서 갤러리 구경 및 맛집 탐방",
+        "DDP (동대문디자인플라자) 에서 전시 관람 후 동대문 시장 야시장 구경",
+        "성수동 카페거리에서 커피 한 잔과 함께 예쁜 소품샵 구경",
+        "코엑스 별마당 도서관에서 책 읽기 및 아쿠아리움 데이트"
+    ];
+
+    recommendButton.addEventListener('click', recommendDateCourse);
+
+    function recommendDateCourse() {
+        const randomIndex = Math.floor(Math.random() * seoulDateCourses.length);
+        const recommendedCourse = seoulDateCourses[randomIndex];
+        dateCourseDisplay.innerHTML = `<p class="course-text">${recommendedCourse}</p>`;
     }
 
-    // localStorage에서 저장된 테마를 불러옴
-    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-    applyTheme(savedDarkMode);
+    // Recommend a course on initial load
+    recommendDateCourse();
 });
