@@ -26,6 +26,13 @@
         </div>
         <button id="get-recommendation-button" data-i18n="recommendationButton">서울 여행지 추천받기</button>
 
+        <div id="recommendation-details" class="recommendation-details-container" style="display: none;">
+            <div id="loading-indicator" style="display: none; text-align: center; padding: 20px;">
+                추천 정보를 불러오는 중입니다...
+            </div>
+            <!-- Detailed content will be injected here by main.js -->
+        </div>
+
         <section id="contact-section">
             <h2 data-i18n="contactTitle">문의하기</h2>
             <p data-i18n="contactDescription">제휴 문의나 다른 질문이 있으시면 아래 양식을 작성해주세요.</p>
@@ -71,5 +78,14 @@
         })();
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    <button id="back-to-top" class="back-to-top-button" title="맨 위로">↑</button>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <a href="about.html">About Us</a> | <a href="privacy.html">개인정보처리방침</a>
+            <p>&copy; 2026 서울 여행지 추천. All Rights Reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
