@@ -1,91 +1,28 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-adsense-account" content="ca-pub-5942314250742787">
-    <title data-i18n="pageTitle">서울 여행지 추천</title>
+    <title>Seoul Travel Map</title>
     <link rel="stylesheet" href="style.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5942314250742787"
-     crossorigin="anonymous"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xod9s+GlJtC9+QhR9M0L/j3R0p7Tq9v2Qp/7B0T2Kj3+W6xR0p4G1Z2q2h0x3G7p0+5L0l0l0p1P7q7z7j7f7+3r7e3c7d3d7f7g3h7i3j7k3l3m7n7o3p7q7r7s7t7u7v7w7x7y7z707172737475767778797a7b7c7d7e7f7g7h7i7j7k7l7m7n7o7p7q7r7s7t7u7v7w7x7y7z7A7B7C7D7E7F7G7H7I7J7K7L7M7N7O7P7Q7R7S7T7U7V7W7X7Y7Z707172737475767778797a7b7c7d7e7f7g7h7i7j7k7l7m7n7o7p7q7r7s7t7u7v7w7x7y7z7A7B7C7D7E7F7G7H7I7J7K7L7M7N7O7P7Q7R7S7T7U7V7W7X7Y7Z"
+          crossorigin=""/>
 </head>
 <body>
-    <div class="header-controls">
-        <select id="language-switcher">
-            <option value="ko">한국어</option>
-            <option value="en">English</option>
-        </select>
-        <button id="dark-mode-toggle" class="mode-toggle-button">🌙</button>
-    </div>
+    <header>
+        <h1>Explore Seoul</h1>
+    </header>
+    <main>
+        <div id="mapid"></div>
 
-    <div class="container">
-        <h1 data-i18n="mainTitle">서울을 발견하세요!</h1>
-        <p data-i18n="description">서울의 활기찬 매력을 탐험할 당신만을 위한 여행지를 추천해 드립니다.</p>
-        <div id="recommendation-display" class="recommendation-box">
-            <p class="recommendation-text" data-i18n="initialRecommendationText">아래 버튼을 눌러 추천 여행지를 받아보세요!</p>
-        </div>
-        <button id="get-recommendation-button" data-i18n="recommendationButton">서울 여행지 추천받기</button>
+    </main>
 
-        <div id="recommendation-details" class="recommendation-details-container" style="display: none;">
-            <div id="loading-indicator" style="display: none; text-align: center; padding: 20px;">
-                추천 정보를 불러오는 중입니다...
-            </div>
-            <!-- Detailed content will be injected here by main.js -->
-        </div>
-
-        <section id="contact-section">
-            <h2 data-i18n="contactTitle">문의하기</h2>
-            <p data-i18n="contactDescription">제휴 문의나 다른 질문이 있으시면 아래 양식을 작성해주세요.</p>
-
-            <form action="https://formspree.io/f/xqedzdqb" method="POST">
-                <label for="contact-name" data-i18n="formNameLabel">이름:</label>
-                <input type="text" id="contact-name" name="name" required>
-
-                <label for="contact-email" data-i18n="formEmailLabel">이메일:</label>
-                <input type="email" id="contact-email" name="_replyto" required>
-
-                <label for="contact-company" data-i18n="formCompanyLabel">회사명 (선택 사항):</label>
-                <input type="text" id="contact-company" name="company">
-
-                <label for="contact-message" data-i18n="formMessageLabel">문의 내용:</label>
-                <textarea id="contact-message" name="message" rows="5" required></textarea>
-
-                <button type="submit" data-i18n="formSubmitButton">문의 제출</button>
-            </form>
-        </section>
-    </div>
-    <script src="main.js"></script>
-
-    <div class="container">
-        <h2 data-i18n="commentsTitle">댓글</h2>
-        <div id="disqus_thread"></div>
-    </div>
-    <script>
-        /**
-        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-        /*
-        var disqus_config = function () {
-        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-        };
-        */
-        (function() { // DON'T EDIT BELOW THIS LINE
-        var d = document, s = d.createElement('script');
-        s.src = 'https://product-11.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-    <button id="back-to-top" class="back-to-top-button" title="맨 위로">↑</button>
-
-    <footer class="site-footer">
-        <div class="footer-container">
-            <a href="index.html">Home</a> | <a href="about.html">About Us</a> | <a href="privacy.html">개인정보처리방침</a>
-            <p>&copy; 2026 서울 여행지 추천. All Rights Reserved.</p>
-        </div>
-    </footer>
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-xod9s+GlJtC9+QhR9M0L/j3R0p7Tq9v2Qp/7B0T2Kj3+W6xR0p4G1Z2q2h0x3G7p0+5L0l0l0p1P7q7z7j7f7+3r7e3c7d3d7f7g3h7i3j7k3l3m7n7o7p7q7r7s7t7u7v7w7x7y7z707172737475767778797a7b7c7d7e7f7g7h7i7j7k7l7m7n7o7p7q7r7s7t7u7v7w7x7y7z7A7B7C7D7E7F7G7H7I7J7K7L7M7N7O7P7Q7R7S7T7U7V7W7X7Y7Z707172737475767778797a7b7c7d7e7f7g7h7i7j7k7l7m7n7o7p7q7r7s7t7u7v7w7x7y7z7A7B7C7D7E7F7G7H7I7J7K7L7M7N7O7P7Q7R7S7T7U7V7W7X7Y7Z"
+            crossorigin=""></script>
+    <script src="script.js"></script>
 </body>
 </html>
