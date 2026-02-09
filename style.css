@@ -111,6 +111,15 @@ p {
     transition: color 0.3s ease;
 }
 
+img.placeholder-image {
+    max-width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove extra space below image */
+    margin: 20px auto; /* Center the image and add some vertical spacing */
+    border-radius: 8px; /* Consistent with existing style */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Consistent with existing style */
+}
+
 .recommendation-box {
     min-height: 180px;
     display: flex;
@@ -246,15 +255,10 @@ button:active {
 
 .recommendation-details-container img.placeholder-image {
     width: 100%;
-    height: 300px;
-    background-color: #e9ecef;
+    max-height: 300px; /* Allow image to be smaller if needed, but not exceed 300px */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
     border-radius: 8px;
     margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #868e96;
-    font-size: 1.2em;
 }
 
 .recommendation-details-container .description {
