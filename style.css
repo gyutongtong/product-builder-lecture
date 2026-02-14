@@ -1,6 +1,6 @@
 body {
   font-family: 'Arial', sans-serif;
-  margin: 20px;
+  margin: 0;
   background-color: #f4f7f6;
   color: #333;
 }
@@ -8,22 +8,64 @@ body {
 h1 {
   text-align: center;
   color: #007bff;
-  margin-bottom: 30px;
+  padding: 20px 0;
+  margin: 0;
 }
 
 #map {
-  height: 600px;
+  height: calc(100vh - 70px); /* Full viewport height minus header */
   width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  max-width: 500px;
+  border-radius: 10px;
+  position: relative;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .photo-input {
-  margin-bottom: 20px;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
 }
 
 .photo-input label {
@@ -35,7 +77,7 @@ h1 {
 
 .photo-input input[type="number"],
 .photo-input input[type="file"] {
-  width: calc(100% - 20px);
+  width: calc(100% - 22px);
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -43,7 +85,12 @@ h1 {
   font-size: 1em;
 }
 
+.photo-input input[readonly] {
+    background-color: #eee;
+}
+
 .photo-input button {
+  width: 100%;
   padding: 12px 20px;
   background-color: #007bff;
   color: white;

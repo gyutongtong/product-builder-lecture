@@ -6,37 +6,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }).addTo(map);
 
     // 2. DOM Elements
+    const photoModal = document.getElementById('photoModal');
+    const closeModalBtn = document.querySelector('.close');
     const photoFileInput = document.getElementById('photoFile');
     const latitudeInput = document.getElementById('latitude');
     const longitudeInput = document.getElementById('longitude');
     const addPhotoBtn = document.getElementById('addPhotoBtn');
 
     let photoMarkers = []; // Array to store marker data { lat, lng, imageData }
-    let selectionMarker; // To show the selected location
 
-    // 3. Map Click Event to Select Location
-    map.on('click', (e) => {
-        const { lat, lng } = e.latlng;
+    // 3. Modal Management
+    const openModal = (lat, lng) => {
         latitudeInput.value = lat.toFixed(6);
         longitudeInput.value = lng.toFixed(6);
+        photoModal.style.display = 'block';
+    };
 
-        // Add or move a marker to show selection
-        if (selectionMarker) {
-            selectionMarker.setLatLng(e.latlng);
-        } else {
-            selectionMarker = L.marker(e.latlng, {
-                draggable: true // Allows dragging to fine-tune
-            }).addTo(map);
-            selectionMarker.on('dragend', function(event) {
-                const marker = event.target;
-                const position = marker.getLatLng();
-                latitudeInput.value = position.lat.toFixed(6);
-                longitudeInput.value = position.lng.toFixed(6);
-            });
+    const closeModal = () => {
+        photoModal.style.display = 'none';
+        // Clear inputs for the next use
+        photoFileInput.value = '';
+        latitudeInput.value = '';
+        longitudeInput.value = '';
+    };
+
+    closeModalBtn.addEventListener('click', closeModal);
+    window.addEventListener('click', (event) => {
+        if (event.target == photoModal) {
+            closeModal();
         }
     });
 
-    // 4. Local Storage Management
+    // 4. Map Click Event to Open Modal
+    map.on('click', (e) => {
+        openModal(e.latlng.lat, e.latlng.lng);
+    });
+
+    // 5. Local Storage Management
     const saveMarkers = () => {
         localStorage.setItem('photoMarkers', JSON.stringify(photoMarkers));
     };
@@ -53,17 +59,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const addMarkerToMap = (lat, lng, imageData) => {
         const marker = L.marker([lat, lng]).addTo(map);
-        marker.bindPopup(`<img src="${imageData}" style="width:100%; height:auto;">`).openPopup();
+        marker.bindPopup(`<img src="${imageData}" style="width:100%; height:auto;">`);
     };
 
-    // 5. Add Photo Functionality
+    // 6. Add Photo Functionality
     addPhotoBtn.addEventListener('click', () => {
         const lat = parseFloat(latitudeInput.value);
         const lng = parseFloat(longitudeInput.value);
         const photoFile = photoFileInput.files[0];
 
         if (isNaN(lat) || isNaN(lng) || !photoFile) {
-            alert('사진 파일과 유효한 위도, 경도를 모두 입력해주세요.');
+            alert('사진 파일을 선택하고, 지도에서 위치를 클릭해주세요.');
             return;
         }
 
@@ -77,18 +83,12 @@ document.addEventListener('DOMContentLoaded', () => {
             photoMarkers.push({ lat, lng, imageData });
             saveMarkers();
 
-            // Clear inputs and selection marker
-            photoFileInput.value = '';
-            latitudeInput.value = '';
-            longitudeInput.value = '';
-            if (selectionMarker) {
-                map.removeLayer(selectionMarker);
-                selectionMarker = null;
-            }
+            // Close modal after adding
+            closeModal();
         };
         reader.readAsDataURL(photoFile);
     });
 
-    // 6. Initial Load
+    // 7. Initial Load
     loadMarkers();
 });
